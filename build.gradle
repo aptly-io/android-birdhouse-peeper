@@ -18,6 +18,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
+        // Still used for com.budiyev.android:code-scanner:2.1.0 (by com.github.espressif:esp-idf-provisioning-android:lib)
         jcenter() // Warning: this repository is going to shut down soon
     }
 }
