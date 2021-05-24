@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.BirdhouseFindFragment" >
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable name="vm" type="xyz.techmush.birdhouse_peeper.vm.BirdhousePeeperViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragmentList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/birdhouseIdLbl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{vm.birdhouse.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <WebView
+                android:id="@+id/webView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/streamStartBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseIdLbl">
+            </WebView>
+
+            <Button
+                android:id="@+id/photoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:drawableLeft="@android:drawable/ic_menu_camera"
+                android:onClick="@{(button) -> vm.onPhoto()}"
+                android:text="Photo"
+                app:layout_constraintBottom_toBottomOf="@+id/streamStopBtn"
+                app:layout_constraintEnd_toStartOf="@+id/streamStopBtn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/streamStopBtn" />
+
+            <Button
+                android:id="@+id/streamStopBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{(button) -> vm.onStop()}"
+                android:text="Stop"
+                android:drawableLeft="@android:drawable/ic_media_pause"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/photoBtn"
+                app:layout_constraintEnd_toStartOf="@+id/streamStartBtn"
+                app:layout_constraintBottom_toBottomOf="@+id/streamStartBtn"
+                app:layout_constraintTop_toTopOf="@+id/streamStartBtn" />
+
+            <Button
+                android:id="@+id/streamStartBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                android:drawableLeft="@android:drawable/ic_media_play"
+                android:onClick="@{(button) -> vm.onStart()}"
+                android:text="Play"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
