@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/birdhousePeeperFragment">
+    <fragment
+        android:id="@+id/BirdhouseFindFragment"
+        android:name="xyz.techmush.birdhouse_peeper.ui.BirdhouseFindFragment"
+        android:label="Scanning for Birdhouse Peepers"
+        tools:layout="@layout/birdhouse_find_fragment" >
+        <action
+            android:id="@+id/action_BirdhouseFindFragment_to_birdhouseConfigFragment"
+            app:destination="@id/birdhouseConfigFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/birdhouseConfigFragment"
+        android:name="xyz.techmush.birdhouse_peeper.ui.BirdhouseConfigFragment"
+        android:label="Birdhouse configuration" >
+        <argument
+            android:name="address"
+            app:argType="string" />
+        <argument
+            android:name="uuid"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_birdhouseConfigFragment_to_birdhousePeeperFragment"
+            app:destination="@id/birdhousePeeperFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/birdhousePeeperFragment"
+        android:name="xyz.techmush.birdhouse_peeper.ui.BirdhousePeeperFragment"
+        android:label="Birdhouse Peeper">
+        <argument
+            android:name="address"
+            app:argType="string" />
+    </fragment>
+    <argument
+        android:name="address"
+        android:defaultValue="10:52:1C:63:2C:9E" />
+</navigation>
