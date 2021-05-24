@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.BirdhouseConfigFragment" >
+
+    <data>
+        <import type="android.view.View" />
+
+        <variable name="vm" type="xyz.techmush.birdhouse_peeper.vm.BirdhouseConfigViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/fragmentList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/birdhouseNameLbl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.configuring ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Birdhouse's name:"
+                app:layout_constraintBaseline_toBaselineOf="@+id/birdhouseName"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="28dp" />
+
+            <EditText
+                android:id="@+id/birdhouseName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={vm.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/birdhouseLocationSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={vm.hasLocation}"
+                android:onCheckedChanged="@{(button, on) -> vm.onLocationSwitchChanged(on)}"
+                android:text="Location"
+                app:layout_constraintBottom_toBottomOf="@+id/birdhouseLocationMap"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/birdhouseLocationMap" />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/birdhouseLocationMap"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="@{vm.hasLocation ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/birdhouseName"
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseName" />
+
+            <Switch
+                android:id="@+id/birdhousePhotoSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="@={vm.hasPhoto}"
+                android:onCheckedChanged="@{(button, on) -> vm.onPhotoSwitchChanged(on)}"
+                android:text="Add photo"
+                app:layout_constraintBottom_toBottomOf="@+id/birdhouseImage"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/birdhouseImage" />
+
+            <ImageView
+                android:id="@+id/birdhouseImage"
+                android:layout_width="0dp"
+                android:layout_height="161dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:visibility="@{vm.hasPhoto ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/birdhouseName"
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseLocationMap"
+                app:srcCompat="@drawable/birdhouse" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SSID:"
+                app:layout_constraintBaseline_toBaselineOf="@+id/birdhouseSsidEdit"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                tools:layout_editor_absoluteY="439dp" />
+
+            <EditText
+                android:id="@+id/birdhouseSsidEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={vm.ssid}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/birdhouseName"
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseImage" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WiFi password:"
+                app:layout_constraintBaseline_toBaselineOf="@+id/birdhouseWiFiPasswordEdit"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                tools:layout_editor_absoluteY="496dp" />
+
+            <EditText
+                android:id="@+id/birdhouseWiFiPasswordEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:text="@={vm.password}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/birdhouseName"
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseSsidEdit" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proof of\nPossession code:"
+                app:layout_constraintBottom_toBottomOf="@+id/birdhousePopEdit"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/birdhousePopEdit" />
+
+            <EditText
+                android:id="@+id/birdhousePopEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={vm.pop}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/birdhouseName"
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseWiFiPasswordEdit" />
+
+            <Button
+                android:id="@+id/birdhouseConfigCancelBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Cancel"
+                android:onClick="@{(button) -> vm.onCancel()}"
+                app:layout_constraintBottom_toBottomOf="@+id/birdhouseConfigConfigureBtn"
+                app:layout_constraintTop_toTopOf="@+id/birdhouseConfigConfigureBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/birdhouseConfigConfigureBtn"
+                />
+
+            <Button
+                android:id="@+id/birdhouseConfigConfigureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Configure"
+                android:onClick="@{(button) -> vm.onConfigure()}"
+                app:layout_constraintTop_toBottomOf="@+id/birdhousePopEdit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/birdhouseConfigCancelBtn"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
