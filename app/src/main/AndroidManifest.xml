@@ -29,19 +29,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BirdhousePeeperAndroid">
-<!--        <activity android:name=".ui.IntroActivity">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
         <activity android:name=".ui.BirdhouseActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--        <activity android:name=".ui.BirdhouseActivity" />-->
+        <activity
+            android:name=".ui.IntroActivity"
+            android:label="Birdhouse Peeper Intro" />
 
 
         <!-- picture taking -->
