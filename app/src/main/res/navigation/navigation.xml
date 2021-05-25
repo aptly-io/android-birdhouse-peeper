@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/birdhousePeeperFragment">
+    app:startDestination="@id/BirdhouseListFragment">
     <fragment
         android:id="@+id/BirdhouseFindFragment"
         android:name="xyz.techmush.birdhouse_peeper.ui.BirdhouseFindFragment"
@@ -38,4 +38,15 @@
     <argument
         android:name="address"
         android:defaultValue="10:52:1C:63:2C:9E" />
+    <fragment
+        android:id="@+id/BirdhouseListFragment"
+        android:name="xyz.techmush.birdhouse_peeper.ui.BirdhouseListFragment"
+        android:label="Your birdhouses" >
+        <action
+            android:id="@+id/action_birdhouseListFragment_to_BirdhouseFindFragment"
+            app:destination="@id/BirdhouseFindFragment" />
+        <action
+            android:id="@+id/action_birdhouseListFragment_to_birdhousePeeperFragment"
+            app:destination="@id/birdhousePeeperFragment" />
+    </fragment>
 </navigation>

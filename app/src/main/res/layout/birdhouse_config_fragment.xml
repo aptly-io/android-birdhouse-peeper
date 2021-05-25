@@ -178,8 +178,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/birdhouseConfigConfigureBtn"
                 app:layout_constraintTop_toTopOf="@+id/birdhouseConfigConfigureBtn"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/birdhouseConfigConfigureBtn"
-                />
+                app:layout_constraintRight_toLeftOf="@+id/birdhouseConfigConfigureBtn" />
 
             <Button
                 android:id="@+id/birdhouseConfigConfigureBtn"
@@ -191,8 +190,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/birdhousePopEdit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toRightOf="@+id/birdhouseConfigCancelBtn"
-                app:layout_constraintRight_toRightOf="parent"
-                />
+                app:layout_constraintRight_toRightOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

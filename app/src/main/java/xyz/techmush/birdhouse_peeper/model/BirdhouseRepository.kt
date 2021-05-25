@@ -91,5 +91,11 @@ class BirdhouseRepository(private val context: Context) {
             putStringSet("ADDRESSES", addresses)
             remove(birdhouse.address)
         }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            context.deleteSharedPreferences("PREF_BIRDHOUSE_${birdhouse.address}")
+        } else {
+            // I wanted to support from Build.VERSION_CODES.M (23) onwards ...
+        }
     }
 }
