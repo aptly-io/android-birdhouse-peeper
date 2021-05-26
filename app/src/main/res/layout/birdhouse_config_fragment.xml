@@ -21,17 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{vm.configuring ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
@@ -47,7 +36,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -93,7 +81,7 @@
             <ImageView
                 android:id="@+id/birdhouseImage"
                 android:layout_width="0dp"
-                android:layout_height="161dp"
+                android:layout_height="160dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:visibility="@{vm.hasPhoto ? View.VISIBLE : View.GONE}"
@@ -115,7 +103,6 @@
                 android:id="@+id/birdhouseSsidEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -137,7 +124,6 @@
                 android:id="@+id/birdhouseWiFiPasswordEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPassword"
@@ -159,38 +145,58 @@
                 android:id="@+id/birdhousePopEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="@={vm.pop}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/birdhouseName"
-                app:layout_constraintTop_toBottomOf="@+id/birdhouseWiFiPasswordEdit" />
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseIpEdit" />
 
-            <Button
-                android:id="@+id/birdhouseConfigCancelBtn"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="Cancel"
-                android:onClick="@{(button) -> vm.onCancel()}"
-                app:layout_constraintBottom_toBottomOf="@+id/birdhouseConfigConfigureBtn"
-                app:layout_constraintTop_toTopOf="@+id/birdhouseConfigConfigureBtn"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@+id/birdhouseConfigConfigureBtn" />
+                android:text="IP address:"
+                app:layout_constraintBaseline_toBaselineOf="@+id/birdhouseIpEdit"
+                app:layout_constraintStart_toStartOf="@+id/textView6" />
+
+            <EditText
+                android:id="@+id/birdhouseIpEdit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@{vm.ip}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/birdhouseName"
+                app:layout_constraintTop_toBottomOf="@+id/birdhouseWiFiPasswordEdit" />
 
             <Button
                 android:id="@+id/birdhouseConfigConfigureBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Configure"
                 android:onClick="@{(button) -> vm.onConfigure()}"
-                app:layout_constraintTop_toBottomOf="@+id/birdhousePopEdit"
+                android:text="Configure"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toRightOf="@+id/birdhouseConfigCancelBtn"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/birdhousePopEdit" />
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:max="4"
+                android:progress="@{vm.progress}"
+                android:visibility="@{0 &lt; vm.progress ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

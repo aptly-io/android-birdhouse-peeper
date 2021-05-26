@@ -17,9 +17,11 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.espressif.provisioning.ESPConstants
 import com.espressif.provisioning.ESPProvisionManager
@@ -35,6 +37,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import xyz.techmush.birdhouse_peeper.databinding.BirdhouseConfigFragmentBinding
+import xyz.techmush.birdhouse_peeper.util.setImageFromPath
 import xyz.techmush.birdhouse_peeper.vm.BirdhouseConfigViewModel
 import java.io.File
 import java.io.IOException
@@ -50,7 +53,6 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
 
     private lateinit var viewModel: BirdhouseConfigViewModel
     private lateinit var binding: BirdhouseConfigFragmentBinding
-    private lateinit var photoPath: String
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
@@ -110,12 +112,14 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
             is BirdhouseConfigViewModel.Event.AddPhoto -> { takePicture() }
             is BirdhouseConfigViewModel.Event.Location -> { takeLocation() }
             is BirdhouseConfigViewModel.Event.Configure -> { configure() }
+            is BirdhouseConfigViewModel.Event.Navigate -> { requireActivity().onBackPressed() }
         } })
     }
 
 
     override fun onPause() {
         super.onPause()
+        // todo should resume, should check switch flag as well
         fusedLocationClient.removeLocationUpdates(locationCallback)
         mapView.onPause()
     }
@@ -165,15 +169,19 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
             // progress
             override fun wifiConfigSent() {
                 Timber.d("wifiConfigSent")
+                viewModel.progress.postValue(2)
             }
 
             override fun wifiConfigApplied() {
                 Timber.d("wifiConfigApplied")
+                viewModel.progress.postValue(3)
             }
 
             override fun deviceProvisioningSuccess() {
                 Timber.d("deviceProvisioningSuccess")
+                viewModel.progress.postValue(4)
                 espDevice.disconnectDevice()
+                viewModel.onConfigured()
             }
 
             // failures
@@ -290,8 +298,7 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("img_${timeStamp}_", ".jpg", storageDir).apply {
-            photoPath = absolutePath // Save a file: path for use with ACTION_VIEW intents
-            Timber.d("##### photoPath: $photoPath")
+            viewModel.photoPath = absolutePath // Save a file: path for use with ACTION_VIEW intents
         }
     }
 
@@ -306,30 +313,7 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
 
 
     private fun setImage() {
-        // Get the dimensions of the View
-        val targetW: Int = binding.birdhouseImage.width
-        val targetH: Int = binding.birdhouseImage.height
-
-        val bmOptions = BitmapFactory.Options().apply {
-            // Get the dimensions of the bitmap
-            inJustDecodeBounds = true
-
-            BitmapFactory.decodeFile(photoPath, this)
-
-            val photoW: Int = outWidth
-            val photoH: Int = outHeight
-
-            // Determine how much to scale down the image
-            val scaleFactor: Int = Math.max(1, Math.min(photoW / targetW, photoH / targetH))
-
-            // Decode the image file into a Bitmap sized to fill the View
-            inJustDecodeBounds = false
-            inSampleSize = scaleFactor
-            inPurgeable = true
-        }
-        BitmapFactory.decodeFile(photoPath, bmOptions)?.also { bitmap ->
-            binding.birdhouseImage.setImageBitmap(bitmap)
-        }
+        setImageFromPath(binding.birdhouseImage, viewModel.photoPath!!)
     }
 
 

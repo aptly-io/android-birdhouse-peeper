@@ -19,7 +19,8 @@ class BirdhouseConfigViewModel @Inject constructor(private val repository: Birdh
     sealed class Event {
         object AddPhoto : Event()
         object Location : Event()
-        class Configure(address: String, uuid: String): Event()
+        object Configure: Event()
+        object Navigate: Event()
     }
 
     val event = LiveEvent<Event>() // cause a single trigger
@@ -32,15 +33,18 @@ class BirdhouseConfigViewModel @Inject constructor(private val repository: Birdh
 
     val hasPhoto = MutableLiveData<Boolean>(true)
 
-    val photoPath: String? = null
+    var photoPath: String? = null
 
     val ssid = MutableLiveData<String>("BHP")
 
     val password = MutableLiveData<String>("")
 
+    val ip = MutableLiveData<String>("192.168.40.44")
+
     val pop = MutableLiveData<String>("")
 
-    val configuring = MutableLiveData<Boolean>(false)
+    val progress = MutableLiveData<Int>(0)
+
 
     fun setArgs(args: BirdhouseConfigFragmentArgs) {
         address = args.address
@@ -65,13 +69,15 @@ class BirdhouseConfigViewModel @Inject constructor(private val repository: Birdh
         }
     }
 
-    fun onCancel() {
-        Timber.d("onCancel")
-
-    }
 
     fun onConfigure() {
         Timber.d("onConfigure")
+        progress.postValue(1)
+        event.postValue(Event.Configure)
+    }
+
+
+    fun onConfigured() {
         val latLng = if (hasLocation.value!!) {
             location.value?.let { "${it.latitude},${it.longitude}" } ?: ""
         } else {
@@ -83,7 +89,10 @@ class BirdhouseConfigViewModel @Inject constructor(private val repository: Birdh
             ""
         }
         repository.save(BirdhouseRepository.Birdhouse(
-            address, uuid,  "192.168.4.1", 80, name.value!!, latLng, imagePath, ssid.value!!, password.value!!, pop.value!!))
-        event.postValue(Event.Configure(address, uuid))
+            address, uuid,  ip.value!!, 80, name.value!!, latLng, imagePath, ssid.value!!, password.value!!, pop.value!!))
+        event.postValue(Event.Navigate)
     }
+
+
+
  }
