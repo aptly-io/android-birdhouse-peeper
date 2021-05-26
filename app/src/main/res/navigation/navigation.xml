@@ -11,21 +11,19 @@
         tools:layout="@layout/birdhouse_find_fragment" >
         <action
             android:id="@+id/action_BirdhouseFindFragment_to_birdhouseConfigFragment"
-            app:destination="@id/birdhouseConfigFragment" />
+            app:destination="@id/birdhouseConfigFragment"
+            app:popUpTo="@id/BirdhouseListFragment" />
     </fragment>
     <fragment
         android:id="@+id/birdhouseConfigFragment"
         android:name="xyz.techmush.birdhouse_peeper.ui.BirdhouseConfigFragment"
-        android:label="Birdhouse configuration" >
+        android:label="Birdhouse Configuration" >
         <argument
             android:name="address"
             app:argType="string" />
         <argument
             android:name="uuid"
             app:argType="string" />
-        <action
-            android:id="@+id/action_birdhouseConfigFragment_to_birdhousePeeperFragment"
-            app:destination="@id/birdhousePeeperFragment" />
     </fragment>
     <fragment
         android:id="@+id/birdhousePeeperFragment"

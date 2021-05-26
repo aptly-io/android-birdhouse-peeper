@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import xyz.techmush.birdhouse_peeper.R
@@ -28,6 +29,12 @@ class BirdhouseActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration.Builder(R.id.BirdhouseListFragment).build()
         val navController = findNavController(R.id.fragmentContainerView)
         setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.id.fragmentContainerView).navigateUp(appBarConfiguration)
+                || super.onSupportNavigateUp()
     }
 
 
