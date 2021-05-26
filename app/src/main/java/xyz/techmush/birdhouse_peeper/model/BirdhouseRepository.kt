@@ -1,6 +1,7 @@
 package xyz.techmush.birdhouse_peeper.model
 
 import android.content.Context
+import android.os.Build
 import androidx.core.content.edit
 import timber.log.Timber
 
@@ -30,14 +31,15 @@ class BirdhouseRepository(private val context: Context) {
             .map { address ->
                 val birdhousePref =
                     context.getSharedPreferences("PREF_BIRDHOUSE_$address", Context.MODE_PRIVATE)
+                val photoPath = birdhousePref.getString("PHOTO_PATH", "")!!
                 val birdhouse = Birdhouse(
                     address,
                     birdhousePref.getString("UUID", "")!!,
-                    birdhousePref.getString("IP", "192.168.4.1")!!,
+                    birdhousePref.getString("IP", "192.168.40.44")!!,
                     birdhousePref.getInt("PORT", 80),
                     birdhousePref.getString("NAME", "BHP_$address")!!,
                     birdhousePref.getString("LOCATION", "")!!,
-                    birdhousePref.getString("PHOTO_PATH", "")!!,
+                    photoPath,
                     birdhousePref.getString("SSID", "BHP_$address")!!,
                     birdhousePref.getString("SSID_PASSWD", "")!!,
                     birdhousePref.getString("POP", "")!!)
@@ -72,6 +74,7 @@ class BirdhouseRepository(private val context: Context) {
             prefs.putString("UUID", birdhouse.uuid)
             prefs.putString("IP", birdhouse.ip)
             prefs.putInt("PORT", birdhouse.port)
+            prefs.putString("NAME", birdhouse.name)
             prefs.putString("LOCATION", birdhouse.location)
             prefs.putString("PHOTO_PATH", birdhouse.photo)
             prefs.putString("SSID", birdhouse.ssid)
