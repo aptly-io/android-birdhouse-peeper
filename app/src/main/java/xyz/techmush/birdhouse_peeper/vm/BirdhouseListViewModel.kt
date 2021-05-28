@@ -44,4 +44,9 @@ class BirdhouseListViewModel @Inject constructor(private val repository: Birdhou
         repository.delete(birdhouse)
         _birdhouses.postValue(repository.read())
     }
+    
+
+    fun reload() {
+        _birdhouses.value= repository.read()
+    }
 }

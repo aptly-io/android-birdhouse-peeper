@@ -40,7 +40,7 @@ class BirdhouseListFragment: Fragment() {
         viewModel = ViewModelProvider(this).get(BirdhouseListViewModel::class.java)
         binding = BirdhouseListFragmentBinding.inflate(inflater, container,false)
         binding.vm = viewModel
-        
+
         return binding.root
     }
 
@@ -73,6 +73,11 @@ class BirdhouseListFragment: Fragment() {
                     .actionBirdhouseListFragmentToBirdhousePeeperFragment(event.birdhouse.address))
             }
         } })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.reload()
     }
 
 } // BirdhouseListFragment
