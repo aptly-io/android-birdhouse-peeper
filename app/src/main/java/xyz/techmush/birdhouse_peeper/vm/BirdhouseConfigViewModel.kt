@@ -47,6 +47,27 @@ class BirdhouseConfigViewModel @Inject constructor(private val repository: Birdh
 
 
     fun setArgs(args: BirdhouseConfigFragmentArgs) {
+        // todo hack to edit
+        if (args.uuid.isEmpty()) {
+            repository.read(address)?.let { birdhouse ->
+                name.value = birdhouse.name
+                if (birdhouse.location.isNotEmpty()) {
+                    hasLocation.value = true
+                    Timber.d("How to set Location")
+                } else {
+                    hasLocation.value = false
+                }
+                if (birdhouse.photo.isNotEmpty()) {
+                    hasPhoto.value = true
+                    photoPath = birdhouse.photo
+                }
+                hasPhoto.value = false
+                ssid.value = birdhouse.ssid
+                password.value = birdhouse.ssidPassword
+                ip.value = birdhouse.ip
+                pop.value = birdhouse.pop
+            }
+        }
         address = args.address
         uuid = args.uuid
     }
@@ -72,8 +93,17 @@ class BirdhouseConfigViewModel @Inject constructor(private val repository: Birdh
 
     fun onConfigure() {
         Timber.d("onConfigure")
+        if (uuid.isEmpty()) {
+            // todo hack to edit
+            repository.read(address)?.let {
+                repository.save(BirdhouseRepository.Birdhouse(
+                    address, it.uuid,  ip.value!!, 80, name.value!!, it.location, it.photo, ssid.value!!, password.value!!, pop.value!!))
+            }
+            // get out this menu
+        } else {
         progress.postValue(1)
         event.postValue(Event.Configure)
+    }
     }
 
 

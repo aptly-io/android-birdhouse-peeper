@@ -14,7 +14,8 @@ import javax.inject.Inject
 class BirdhousePeeperViewModel @Inject constructor(private val repository: BirdhouseRepository): ViewModel() {
 
     sealed class Event {
-        class Navigate(val url: String): Event()
+        class LoadUrl(val url: String): Event()
+        object NavigateEdit: Event()
     }
 
     private val _birdhouse = MutableLiveData<BirdhouseRepository.Birdhouse>(null)

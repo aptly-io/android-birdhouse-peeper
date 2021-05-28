@@ -24,10 +24,22 @@
                 android:id="@+id/birdhouseIdLbl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@{vm.birdhouse.name}"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@{String.format(`%s (%s)`, vm.birdhouse.name, vm.birdhouse.ip)}"
+                app:layout_constraintBottom_toBottomOf="@+id/editBtn"
+                app:layout_constraintEnd_toStartOf="@+id/editBtn"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/editBtn" />
+
+            <Button
+                android:id="@+id/editBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Edit"
+                android:drawableLeft="@android:drawable/ic_menu_edit"
+                android:onClick="@{(button) -> vm.onEdit()}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <WebView
@@ -35,15 +47,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:scrollbars="none"
                 app:layout_constraintBottom_toTopOf="@+id/streamStartBtn"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/birdhouseIdLbl">
-            </WebView>
+                app:layout_constraintTop_toBottomOf="@+id/editBtn"></WebView>
 
             <Button
                 android:id="@+id/photoBtn"

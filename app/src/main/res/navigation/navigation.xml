@@ -32,6 +32,9 @@
         <argument
             android:name="address"
             app:argType="string" />
+        <action
+            android:id="@+id/action_birdhousePeeperFragment_to_birdhouseConfigFragment"
+            app:destination="@id/birdhouseConfigFragment" />
     </fragment>
     <argument
         android:name="address"
