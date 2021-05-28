@@ -172,6 +172,30 @@
                 app:layout_constraintStart_toStartOf="@+id/birdhouseName"
                 app:layout_constraintTop_toBottomOf="@+id/birdhouseWiFiPasswordEdit" />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Config progress:"
+                android:visibility="@{0 &lt; vm.progress ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBar2"
+                app:layout_constraintStart_toStartOf="@+id/textView6"
+                app:layout_constraintTop_toTopOf="@+id/progressBar2" />
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:max="4"
+                android:progress="@{vm.progress}"
+                android:visibility="@{0 &lt; vm.progress ? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/birdhouseName"
+                app:layout_constraintTop_toBottomOf="@+id/birdhousePopEdit" />
+
             <Button
                 android:id="@+id/birdhouseConfigConfigureBtn"
                 android:layout_width="wrap_content"
@@ -181,22 +205,7 @@
                 android:text="Configure"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/birdhousePopEdit" />
-
-            <ProgressBar
-                android:id="@+id/progressBar2"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="0dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginEnd="32dp"
-                android:max="4"
-                android:progress="@{vm.progress}"
-                android:visibility="@{0 &lt; vm.progress ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/progressBar2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

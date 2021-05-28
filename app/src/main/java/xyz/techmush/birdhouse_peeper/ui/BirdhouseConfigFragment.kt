@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -182,30 +183,37 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
                 viewModel.progress.postValue(4)
                 espDevice.disconnectDevice()
                 viewModel.onConfigured()
+                Toast.makeText(context, "Provisioned successfully!", Toast.LENGTH_LONG).show()
+                requireActivity().onBackPressed()
             }
 
             // failures
             override fun createSessionFailed(e: java.lang.Exception?) {
                 Timber.w("provision failed: $e")
+                Toast.makeText(context, "Provisioning failed with createSessionFailed: $e", Toast.LENGTH_LONG).show()
             }
 
             override fun wifiConfigFailed(e: java.lang.Exception?) {
                 Timber.w("provision failed in wifiConfig: $e")
                 espDevice.disconnectDevice()
+                Toast.makeText(context, "Provisioning failed with wifiConfigFailed: $e", Toast.LENGTH_LONG).show()
             }
 
             override fun wifiConfigApplyFailed(e: java.lang.Exception?) {
                 Timber.w("provision failed in wifiConfigApply: $e")
+                Toast.makeText(context, "Provisioning failed with wifiConfigApplyFailed: $e", Toast.LENGTH_LONG).show()
                 espDevice.disconnectDevice()
             }
 
             override fun provisioningFailedFromDevice(failureReason: ESPConstants.ProvisionFailureReason?) {
                 Timber.w("provision failed from device: $failureReason")
+                Toast.makeText(context, "Provisioning failed with provisioningFailedFromDevice: ${failureReason}", Toast.LENGTH_LONG).show()
                 espDevice.disconnectDevice()
             }
 
             override fun onProvisioningFailed(e: java.lang.Exception?) {
                 Timber.w("provision failed onProvisionFailed: $e")
+                Toast.makeText(context, "Provisioning failed with onProvisioningFailed: $e", Toast.LENGTH_LONG).show()
                 espDevice.disconnectDevice()
             }
         })
