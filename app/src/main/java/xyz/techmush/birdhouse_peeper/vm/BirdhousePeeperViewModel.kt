@@ -32,8 +32,7 @@ class BirdhousePeeperViewModel @Inject constructor(private val repository: Birdh
     fun onPhoto() {
         Timber.d("onPhoto")
         _birdhouse.value?.let {
-            cameraSetup(it)
-            event.postValue(Event.Navigate("http://${it.ip}:${it.port}/capture"))
+            event.postValue(Event.LoadUrl("http://${it.ip}:${it.port}/capture"))
         }
     }
 
@@ -41,8 +40,7 @@ class BirdhousePeeperViewModel @Inject constructor(private val repository: Birdh
     fun onStart() {
         Timber.d("onStart")
         _birdhouse.value?.let {
-            cameraSetup(it)
-            event.postValue(Event.Navigate("http://${it.ip}:${it.port+1}/stream"))
+            event.postValue(Event.LoadUrl("http://${it.ip}:${it.port+1}/stream"))
         }
     }
 
@@ -52,9 +50,8 @@ class BirdhousePeeperViewModel @Inject constructor(private val repository: Birdh
     }
 
 
-    private fun cameraSetup(it: BirdhouseRepository.Birdhouse) {
-        event.postValue(Event.Navigate("http://${it.ip}:${it.port}/control?var=framesize&val=7"))
-        event.postValue(Event.Navigate("http://${it.ip}:${it.port}/control?var=quality&val=4"))
-        event.postValue(Event.Navigate("http://${it.ip}:${it.port}/control?var=led_intensity&val=0"))
+    fun onEdit() {
+        Timber.d("onEdit")
+        event.postValue(Event.NavigateEdit)
     }
 }
