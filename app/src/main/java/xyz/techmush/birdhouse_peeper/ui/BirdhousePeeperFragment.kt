@@ -1,5 +1,6 @@
 package xyz.techmush.birdhouse_peeper.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,16 +9,9 @@ import android.webkit.WebView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 import xyz.techmush.birdhouse_peeper.databinding.BirdhousePeeperFragmentBinding
-import xyz.techmush.birdhouse_peeper.vm.BirdhouseConfigViewModel
 import xyz.techmush.birdhouse_peeper.vm.BirdhousePeeperViewModel
 
 @AndroidEntryPoint
@@ -37,6 +31,8 @@ class BirdhousePeeperFragment : Fragment() {
         binding.vm = viewModel
 
         webView = binding.webView
+        webView.setInitialScale(100)
+        webView.setBackgroundColor(Color.TRANSPARENT)
 
         viewModel.setArgs(args)
 
