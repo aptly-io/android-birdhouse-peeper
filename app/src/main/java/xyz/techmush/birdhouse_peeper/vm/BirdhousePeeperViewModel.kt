@@ -14,8 +14,8 @@ import javax.inject.Inject
 class BirdhousePeeperViewModel @Inject constructor(private val repository: BirdhouseRepository): ViewModel() {
 
     sealed class Event {
-        class LoadUrl(val url: String): Event()
-        object NavigateEdit: Event()
+        class LoadUrl(val url: String, val birdhouse: BirdhouseRepository.Birdhouse): Event()
+        class NavigateEdit(val birdhouse: BirdhouseRepository.Birdhouse): Event()
     }
 
     private val _birdhouse = MutableLiveData<BirdhouseRepository.Birdhouse>(null)
@@ -32,7 +32,7 @@ class BirdhousePeeperViewModel @Inject constructor(private val repository: Birdh
     fun onPhoto() {
         Timber.d("onPhoto")
         _birdhouse.value?.let {
-            event.postValue(Event.LoadUrl("http://${it.ip}:${it.port}/capture"))
+            event.postValue(Event.LoadUrl("http://${it.ip}:${it.port}/capture", it))
         }
     }
 
@@ -40,7 +40,7 @@ class BirdhousePeeperViewModel @Inject constructor(private val repository: Birdh
     fun onStart() {
         Timber.d("onStart")
         _birdhouse.value?.let {
-            event.postValue(Event.LoadUrl("http://${it.ip}:${it.port+1}/stream"))
+            event.postValue(Event.LoadUrl("http://${it.ip}:${it.port+1}/stream", it))
         }
     }
 
@@ -52,6 +52,6 @@ class BirdhousePeeperViewModel @Inject constructor(private val repository: Birdh
 
     fun onEdit() {
         Timber.d("onEdit")
-        event.postValue(Event.NavigateEdit)
+        _birdhouse.value?.let { event.postValue(Event.NavigateEdit(it)) }
     }
 }

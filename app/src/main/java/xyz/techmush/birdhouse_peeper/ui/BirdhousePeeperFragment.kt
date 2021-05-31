@@ -5,8 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -51,9 +50,9 @@ class BirdhousePeeperFragment : Fragment() {
                 Timber.d("URL: ${event.url}")
 
                 val urls = listOf(
-                    "http://192.168.40.44:80/control?var=quality&val=4",
-                    "http://192.168.40.44:80/control?var=framesize&val=9",
-                    "http://192.168.40.44:80/control?var=led_intensity&val=49",
+                    "http://${event.birdhouse.ip}:${event.birdhouse.port}/control?var=quality&val=4",
+                    "http://${event.birdhouse.ip}:${event.birdhouse.port}/control?var=framesize&val=9",
+                    "http://${event.birdhouse.ip}:${event.birdhouse.port}/control?var=led_intensity&val=49",
                     event.url)
                 val numbersIterator = urls.iterator()
 
@@ -66,13 +65,25 @@ class BirdhousePeeperFragment : Fragment() {
                             webView.loadUrl(nextUrl)
                         }
                     }
+
+                    override fun onReceivedHttpError (
+                        view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse) {
+                        super.onReceivedHttpError(view, request, errorResponse)
+                        Timber.w("onReceivedHttpError: ${request.url}, ${errorResponse.statusCode}: ${errorResponse.reasonPhrase}")
+                    }
+
+                    override fun onReceivedError (
+                        view: WebView, request: WebResourceRequest, error: WebResourceError) {
+                        super.onReceivedError(view, request, error)
+                        Timber.w("onReceivedError: ${request.url}, ${error.errorCode}: ${error.description}")
+                    }
+
                 }
                 webView.loadUrl(numbersIterator.next())
             }
             is BirdhousePeeperViewModel.Event.NavigateEdit -> {
                 findNavController().navigate(BirdhousePeeperFragmentDirections
-                    .actionBirdhousePeeperFragmentToBirdhouseConfigFragment(
-                        viewModel.birdhouse.value!!.address, ""))
+                    .actionBirdhousePeeperFragmentToBirdhouseConfigFragment(event.birdhouse.address, ""))
             }
         } })
     }
