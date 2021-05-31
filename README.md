@@ -21,3 +21,7 @@ Maaany TODO's:
 - change the device's prefix (e.g. "BHP")
 - provision for running an AP (now only STA)
 - proper UI/fragment
+- check hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
+- check hasSystemFeature(PackageManager.BLUETOOTH_LE)
+- don't show map if there's no (valid) API key
+- todo's pointing to parts to refactor
