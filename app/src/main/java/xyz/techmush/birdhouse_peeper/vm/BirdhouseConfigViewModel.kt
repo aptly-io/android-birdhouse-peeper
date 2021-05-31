@@ -49,7 +49,7 @@ class BirdhouseConfigViewModel @Inject constructor(private val repository: Birdh
     fun setArgs(args: BirdhouseConfigFragmentArgs) {
         // todo hack to edit
         if (args.uuid.isEmpty()) {
-            repository.read(address)?.let { birdhouse ->
+            repository.read(args.address)?.let { birdhouse ->
                 name.value = birdhouse.name
                 if (birdhouse.location.isNotEmpty()) {
                     hasLocation.value = true
