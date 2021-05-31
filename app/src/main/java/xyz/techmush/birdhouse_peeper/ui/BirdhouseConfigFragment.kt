@@ -66,11 +66,6 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        // todo
-        // hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
-        // hasSystemFeature(PackageManager.BLUETOOTH_LE)
-        // etc
-
         viewModel = ViewModelProvider(this).get(BirdhouseConfigViewModel::class.java)
         binding = BirdhouseConfigFragmentBinding.inflate(inflater, container,false)
         binding.lifecycleOwner = viewLifecycleOwner // set it here, onViewCreated is too late
@@ -128,7 +123,7 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
 
     @SuppressLint("MissingPermission") // handled in introActivity
     private fun takeLocation() {
-        val locationRequest = LocationRequest.create()?.apply {
+        val locationRequest = LocationRequest.create().apply {
             interval = 10000
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -150,7 +145,7 @@ class BirdhouseConfigFragment: Fragment(), OnMapReadyCallback {
         // todo fail-safe
         // todo release resources
         val bluetoothManager = requireActivity().getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        val bluetoothAdapter = bluetoothManager!!.adapter
+        val bluetoothAdapter = bluetoothManager.adapter
         val bluetoothDevice = bluetoothAdapter.getRemoteDevice(args.address)
 
         val espManager = ESPProvisionManager.getInstance(requireContext())

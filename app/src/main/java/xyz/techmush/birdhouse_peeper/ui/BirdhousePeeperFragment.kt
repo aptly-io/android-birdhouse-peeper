@@ -62,11 +62,8 @@ class BirdhousePeeperFragment : Fragment() {
                         super.onPageFinished(view, url)
 
                         if (numbersIterator.hasNext()) {
-                            val url = numbersIterator.next()
-                            Timber.d("Loading next: $url")
-                            webView.loadUrl(url)
-                        } else {
-                            Timber.d("Loading done")
+                            val nextUrl = numbersIterator.next()
+                            webView.loadUrl(nextUrl)
                         }
                     }
                 }
